@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNUUY Bot Wiki</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e6e6e6;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: #242424;
+            border-right: 1px solid #404040;
+            padding: 20px;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #404040;
+            padding-bottom: 10px;
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .nav-section h3 {
+            color: #b3b3b3;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .nav-item {
+            display: block;
+            color: #cccccc;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item:hover {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background-color: #0969da;
+            color: #ffffff;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            max-width: calc(100vw - 320px);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: #ffffff;
+            font-size: 2rem;
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+            border-bottom: 1px solid #404040;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin: 25px 0 10px 0;
+            font-weight: 600;
+        }
+
+        h4 {
+            color: #e6e6e6;
+            font-size: 1.2rem;
+            margin: 20px 0 8px 0;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: #cccccc;
+        }
+
+        .subtitle {
+            color: #8b949e;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        code {
+            background-color: #2d2d2d;
+            color: #f85552;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: #2d2d2d;
+            color: #e6e6e6;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+            border: 1px solid #404040;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .command-block {
+            background-color: #242424;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .command-title {
+            color: #58a6ff;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .command-usage {
+            background-color: #2d2d2d;
+            color: #7ee787;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 8px 0;
+            border-left: 3px solid #238636;
+        }
+
+        .command-description {
+            color: #cccccc;
+            margin-bottom: 12px;
+        }
+
+        .command-params {
+            margin-top: 12px;
+        }
+
+        .param {
+            background-color: #1a1a1a;
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 4px;
+            border-left: 3px solid #58a6ff;
+        }
+
+        .param-name {
+            color: #58a6ff;
+            font-weight: 600;
+        }
+
+        .param-type {
+            color: #f85552;
+            font-size: 0.85em;
+            font-family: monospace;
+        }
+
+        .param-desc {
+            color: #cccccc;
+            margin-top: 4px;
+        }
+
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            color: #cccccc;
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-left: 4px solid #58a6ff;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .warning-box {
+            background-color: #2d1b00;
+            border: 1px solid #f59e0b;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                max-width: 100vw;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <h2>🐰 BNUUY Bot</h2>
+            <div id="navigation"></div>
+        </nav>
+
+        <main class="main-content">
+            <div id="content"></div>
+        </main>
+    </div>
+
+    <script>
+        const wikiContent = {
+            home: {
+                title: "BNUUY Bot",
+                subtitle: "*<i>Rabbit noises*</i> 🐰",
+                content: `
+                    <p>Welcome to the BNUUY Bot wiki!</p>
+                    
+                    <div class="info-box">
+                        <strong>🐰 What is BNUUY?</strong> BNUUY is internet slang for "bunny"
+                    </div>
+                    
+                    <h2>🎮 Core Mechanics</h2>
+                    <p>BNUUY operates on a <strong>stealing system</strong> where users can steal the bunny from each other:</p>
+                    <ul>
+                        <li>Users can steal BNUUY using <code>*steals your bnuuy*</code></li>
+                        <li>When stolen, BNUUY's nickname changes to display who stole it.</li>
+                        <li>The bunny will automatically escape after 3-10 minutes</li>
+                        <li>Only the current owner can return BNUUY early with <code>*returns your bnuuy*</code>.</li>
+                        <li>5-minute cooldown between steals</li>
+                    </ul>
+                    
+                    <h2>✨ Quick Start</h2>
+                    <p>Try these commands to get started:</p>
+                    <ul>
+                        <li>Mention <code>@BNUUY</code> or say "bnuuy" to get a random response</li>
+                        <li>Use <code>*steals your bnuuy*</code> to steal the bunny</li>
+                        <li>And use <code>*returns your bnuuy*</code> to steal the bunny</li>
+                        <li>Try <code>bnuuy slots</code> for a slot machine game</li>
+                        <li>Ask any question ending with <b>"?"</b> for random <b>yes/no/maybe</b> answers</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <strong>🔒 Private Bot:</strong> BNUUY is currently a private bot for my server and is not available for public invitation.
+                    </div>
+                `
+            },
+            
+            "steal-system": {
+                title: "Stealing System",
+                subtitle: "The heart of BNUUY's gameplay",
+                content: `
+                    <h2>🎯 How Stealing Works</h2>
+                    <p>The stealing system is BNUUY's main feature, creating interactive gameplay between server members.</p>
+                    
+                    <div class="command-block">
+                        <div class="command-title">*steals your bnuuy*</div>
+                        <div class="command-usage">*steals your bnuuy*</div>
+                        <div class="command-description">
+                            Steal BNUUY from their current state. When stolen, BNUUY's nickname and status will update to show the new owner.
+                        </div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <div class="command-title">*returns your bnuuy*</div>
+                        <div class="command-usage">*returns your bnuuy*</div>
+                        <div class="command-description">
+                            Return BNUUY to freedom. Only the person who stole it can return the BNUUY.
+                        </div>
+                    </div>
+                    
+                    <h2>📊 Stealing Rules</h2>
+                    <ul>
+                        <li><strong>Cooldown:</strong> 5 minutes (300 seconds) between steal attempts</li>
+                        <li><strong>Auto-escape:</strong> BNUUY escapes on their own after 3-10 minutes</li>
+                        <li><strong>Ownership:</strong> Only the current owner can return BNUUY early</li>
+                        <li><strong>Status updates:</strong> Bot nickname and status reflect current ownership</li>
+                        <li><strong>Persistence:</strong> Ownership state is saved to <code>bnuuy.json</code></li>
+                    </ul>
+                    
+                    <h2>🏃‍♂️ Escape Mechanism</h2>
+                    <p>When BNUUY is stolen, they will automatically attempt to escape:</p>
+                    <ul>
+                        <li>Escape timer is random between 3-10 minutes</li>
+                        <li>Bot status shows countdown timer</li>
+                        <li>Escape announcement is posted when BNUUY breaks free</li>
+                        <li>Escape can be canceled if BNUUY is returned manually</li>
+                    </ul>
+                    
+                    <div class="info-box">
+                        <strong>💡 Pro Tip:</strong> Watch BNUUY's status to see how much time is left before they escape.
+                    </div>
+                `
+            },
+            
+            "interactive-commands": {
+                title: "Interactive Commands",
+                subtitle: "Fun ways to interact with BNUUY",
+                content: `
+                    <div class="command-block">
+                        <div class="command-title">*feeds bnuuy*</div>
+                        <div class="command-usage">*feeds bnuuy*</div>
+                        <div class="command-description">
+                            Feed BNUUY.
+                        </div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <div class="command-title">*trusts*</div>
+                        <div class="command-usage">*trusts*</div>
+                        <div class="command-description">
+                            BNUUY will trust with you.
+                        </div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <div class="command-title">@BNUUY or "bnuuy"</div>
+                        <div class="command-usage">@BNUUY</div>
+                        <div class="command-description">
+                            Mention BNUUY or end your message with "bnuuy" to get a totally not random response.
+                        </div>
+                    </div>
+                    
+                    <h2>🎲 Random Responses</h2>
+                    <p>When you mention BNUUY or say "bnuuy", you'll get one of these responses:</p>
+                    <ul>
+                        <li><code><i>*rabbit sounds*</i></code></li>
+                        <li><code><u>Bnuuy</u></code></li>
+                        <li><code>🥕 nom nom</code></li>
+                        <li><code><i>*angy rabbit noises*</i></code></li>
+                        <li><code><i>*thump*</i></code></li>
+                        <li><code>mm yeas bnuuy</code></li>
+                    </ul>
+                    
+                    <h2>💀 Special Responses</h2>
+                    <p>BNUUY has some special reactions to certain words, screw around to figure them out!</p>
+                    
+                    <div class="warning-box">
+                        <strong>⚠️ Note:</strong> These interactions only work when BNUUY is not stolen, or if you're the current owner!
+                    </div>
+                `
+            },
+            
+            "games": {
+                title: "Games & Fun",
+                subtitle: "Entertainment features and mini-games",
+                content: `
+                    <div class="command-block">
+                        <div class="command-title">bnuuy slots</div>
+                        <div class="command-usage">bnuuy slots</div>
+                        <div class="command-description">
+                            Play a slot machine game with fruit and vegetable symbols. Get matching symbols for different outcomes!
+                        </div>
+                    </div>
+                    
+                    <h2>🎰 How Slots Work</h2>
+                    <p>The slot machine uses these symbols:</p>
+                    <p><code>🥕 🍓 🍎 🍉 🍌 🍒 🍇 🍍 🥦 🌽</code></p>
+                    
+                    <h3>Winning Conditions:</h3>
+                    <ul>
+                        <li><strong>Jackpot (3 matching):</strong> "🎉 JACKPOT! bnuuy is pleased."</li>
+                        <li><strong>Partial match (2 matching):</strong> "✨ Not bad! bnuuy eats your carrot."</li>
+                        <li><strong>No match:</strong> "🥖 bnuuy wants you dead."</li>
+                    </ul>
+                    
+                    <h2>❓ Question Responses</h2>
+                    <p>BNUUY will answer your questions with random responses:</p>
+                    
+                    <div class="command-block">
+                        <div class="command-title">Any question ending with "?"</div>
+                        <div class="command-usage">Should I do my homework?</div>
+                        <div class="command-description">
+                            Get a random yes/no/maybe response to any question.
+                        </div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <div class="command-title">Questions ending with "when?"</div>
+                        <div class="command-usage">When will it happen?</div>
+                        <div class="command-description">
+                            Get a random time prediction.
+                        </div>
+                    </div>
+                    
+                `
+            },
+            
+            "utility": {
+                title: "Utility Commands",
+                subtitle: "Helpful bot functions",
+                content: `
+                    <div class="command-block">
+                        <div class="command-title">echo</div>
+                        <div class="command-usage">echo [message]</div>
+                        <div class="command-description">
+                            Make BNUUY repeat your message!
+                        </div>
+                        <div class="command-params">
+                            <div class="param">
+                                <span class="param-name">message</span> 
+                                <span class="param-type">(required string)</span>
+                                <div class="param-desc">The message to echo</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <div class="command-title">bnuuy suggest</div>
+                        <div class="command-usage">bnuuy suggest [suggestion]</div>
+                        <div class="command-description">
+                            Send a suggestion for the bot directly to the developer (Korin).
+                        </div>
+                        <div class="command-params">
+                            <div class="param">
+                                <span class="param-name">suggestion</span> 
+                                <span class="param-type">(required string)</span>
+                                <div class="param-desc">Your suggestion for bot improvements</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>💡 Suggestion System</h2>
+                    <p>Got ideas for BNUUY? Use the suggestion command:</p>
+                    <div class="command-usage">bnuuy suggest [suggestion]</div>
+                    
+                    <p>Your suggestion will be DMed directly to the bot developer for consideration.</p>
+                    
+                    <div class="info-box">
+                        <strong>📬 Suggestion Tips:</strong> Be specific and clear about what you'd like to see added. Include why you think it would be fun or useful!
+                    </div>
+                `
+            },
+            
+            echo: {
+                title: "Echo Command Details",
+                subtitle: "How the echo system works",
+                content: `
+                    <h2>🔊 Echo Command</h2>
+                    <p>The echo command allows users to make BNUUY repeat messages.</p>
+                    
+                    <div class="command-block">
+                        <div class="command-title">echo</div>
+                        <div class="command-usage">echo [your message here]</div>
+                        <div class="command-description">
+                            Make BNUUY repeat your message!
+                        </div>
+                    </div>
+ 
+                    
+                    <h2>⚠️ Important Notes</h2>
+                    <div class="warning-box">
+                        <strong>Responsible Use:</strong> The echo command should be used responsibly. Don't use it to impersonate others or spread misinformation. <br>The bot displays who sent the message and sending NSFW or any content that is not allowed WILL make you suffer the consequences of your actions.
+                    </div>
+                `
+            },
+            
+            setup: {
+                title: "Bot Information",
+                subtitle: "About BNUUY and technical details",
+                content: `
+                    <h2>🤖 Bot Details</h2>
+                    <p>BNUUY is a private Discord bot created for a specific server community. Here are the technical details:</p>
+                    
+                    <div class="info-box">
+                        <strong>🔒 Private Bot:</strong> BNUUY is not publicly available and cannot be invited to other servers at this time.
+                    </div>
+                    
+                    <h2>⚙️ Technical Specifications</h2>
+                    <ul>
+                        <li><strong>Language:</strong> Python 3.x with discord.py</li>
+                        <li><strong>Prefix:</strong> ! (exclamation mark) - though most features don't use it</li>
+                        <li><strong>Intents:</strong> All intents enabled for full functionality</li>
+                        <li><strong>Storage:</strong> JSON file-based persistence</li>
+                        <li><strong>Hosting:</strong> Private hosting environment</li>
+                    </ul>
+                    
+                    <h2>🎮 How BNUUY Works</h2>
+                    <p>Unlike traditional command-based bots, BNUUY primarily responds to natural language:</p>
+                    <ul>
+                        <li>Most interactions use roleplay actions like <code>*steals your bnuuy*</code></li>
+                        <li>Simple phrases trigger responses (e.g., "bnuuy", questions)</li>
+                        <li>Context-aware responses based on current state</li>
+                        <li>No complex command syntax to remember</li>
+                    </ul>
+                    
+                    <h2>📊 Data Storage</h2>
+                    <p>BNUUY stores minimal data in <code>bnuuy.json</code>:</p>
+                    <pre><code>{
+  "is_stolen": false,
+  "stolen_by": 0,
+  "stolen_by_display": "",
+  "last_stolen_time": 0
+}</code></pre>
+                    
+                    <h2>🔧 Bot Permissions</h2>
+                    <p>BNUUY needs these permissions to function properly:</p>
+                    <ul>
+                        <li><strong>Send Messages:</strong> Basic communication</li>
+                        <li><strong>Read Message History:</strong> Process user messages</li>
+                        <li><strong>Embed Links:</strong> Send rich content</li>
+                        <li><strong>Change Nickname:</strong> Update display name when stolen</li>
+                        <li><strong>Use External Emojis:</strong> React with custom emojis</li>
+                    </ul>
+                `
+            },
+            
+            troubleshooting: {
+                title: "Troubleshooting",
+                subtitle: "Common issues and solutions",
+                content: `
+                    <h2>🔧 Common Issues</h2>
+                    
+                    <h3>Bot Not Responding</h3>
+                    <p>If BNUUY isn't responding to commands:</p>
+                    <ul>
+                        <li>Check if the bot is online (green status)</li>
+                        <li>Verify you're using the correct prefix (<code>!</code>)</li>
+                        <li>Ensure the bot has permission to read and send messages</li>
+                        <li>Try the <code>!ping</code> command first</li>
+                    </ul>
+                    
+                    <h3>Commands Not Working</h3>
+                    <p>If specific commands aren't working:</p>
+                    <ul>
+                        <li>Double-check command spelling</li>
+                        <li>Use <code>!help [command]</code> for correct usage</li>
+                        <li>Verify required permissions are granted</li>
+                        <li>Check if the command needs additional parameters</li>
+                    </ul>
+                    
+                    <h3>Missing Embeds or Images</h3>
+                    <p>If bot messages appear as plain text:</p>
+                    <ul>
+                        <li>Grant "Embed Links" permission</li>
+                        <li>Grant "Attach Files" permission for images</li>
+                        <li>Check your Discord client settings</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <strong>Still Having Issues?</strong> Contact the bot developer or check the support server for additional help.
+                    </div>
+                `
+            }
+        };
+
+        // Navigation categories for the sidebar
+        const navigationStructure = {
+            "Getting Started": ["home", "steal-system"],
+            "Commands & Features": ["interactive-commands", "games", "utility", "echo"],
+            //"Information": ["features", "setup"]
+        };
+
+        function generateNavigation() {
+            const nav = document.getElementById('navigation');
+            nav.innerHTML = '';
+            
+            Object.entries(navigationStructure).forEach(([category, pages]) => {
+                const section = document.createElement('div');
+                section.className = 'nav-section';
+                
+                const heading = document.createElement('h3');
+                heading.textContent = category;
+                section.appendChild(heading);
+                
+                pages.forEach(pageId => {
+                    if (wikiContent[pageId]) {
+                        const link = document.createElement('a');
+                        link.href = `#${pageId}`;
+                        link.className = 'nav-item';
+                        link.textContent = wikiContent[pageId].title;
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            showPage(pageId);
+                            updateUrl(pageId);
+                        });
+                        section.appendChild(link);
+                    }
+                });
+                
+                nav.appendChild(section);
+            });
+        }
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show the requested page
+            let pageElement = document.getElementById(`page-${pageId}`);
+            
+            if (!pageElement && wikiContent[pageId]) {
+                // Create the page if it doesn't exist
+                pageElement = createPage(pageId, wikiContent[pageId]);
+                document.getElementById('content').appendChild(pageElement);
+            }
+            
+            if (pageElement) {
+                pageElement.classList.add('active');
+                
+                // Update active nav item
+                const navItem = document.querySelector(`a[href="#${pageId}"]`);
+                if (navItem) {
+                    navItem.classList.add('active');
+                }
+            }
+        }
+
+        function createPage(pageId, pageData) {
+            const page = document.createElement('div');
+            page.id = `page-${pageId}`;
+            page.className = 'page';
+            
+            page.innerHTML = `
+                <h1>${pageData.title}</h1>
+                ${pageData.subtitle ? `<p class="subtitle">${pageData.subtitle}</p>` : ''}
+                ${pageData.content}
+            `;
+            
+            return page;
+        }
+
+        function updateUrl(pageId) {
+            window.history.pushState({ page: pageId }, '', `#${pageId}`);
+        }
+
+        function loadPageFromUrl() {
+            const hash = window.location.hash.substring(1);
+            const pageId = hash || 'home';
+            showPage(pageId);
+        }
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.page) {
+                showPage(e.state.page);
+            } else {
+                loadPageFromUrl();
+            }
+        });
+
+        // Initialize the wiki
+        document.addEventListener('DOMContentLoaded', () => {
+            generateNavigation();
+            loadPageFromUrl();
+        });
+
+        // Handle hash changes
+        window.addEventListener('hashchange', loadPageFromUrl);
+    </script>
+</body>
+</html>
