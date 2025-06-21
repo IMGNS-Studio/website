@@ -6,151 +6,72 @@
 <title>BNUUY Gallery</title>
 
 <style>
-Add comment
-More actions
-
-
   body {
-
-
     font-family: Arial, sans-serif;
-
-
     margin: 16px;
-
-
-    background: #f0f0f0;
-
-
+    background: #121212;
+    color: #ddd;
   }
-
-
-  #controls {
-
-
-    margin-bottom: 16px;
-
-
-  }
-
-
-  #amount {
-
-
-    width: 60px;
-
-
-    padding: 6px;
-
-
-    font-size: 16px;
-
-
-  }
-
-
-  button {
-
-
-    padding: 7px 14px;
-
-
-    font-size: 16px;
-
-
-    cursor: pointer;
-
-
-  }
-
 
   #gallery {
-
-
     display: grid;
-
-
-    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
-
-
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 12px;
-
-
   }
 
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    background: #222;
+    padding: 6px;
+    transition: box-shadow 0.3s ease;
+  }
 
+  .image-container:hover {
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+  }
+
+  .image-container img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .caption {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #aaa;
+    user-select: none;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 </style>
-  
+
 </head>
 <body>
 
-<div id="gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
+<div id="gallery">
 
-    <div style="
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        border-radius:8px;
-        box-shadow:0 2px 6px rgba(0,0,0,0.15);
-        background:#fff;
-        padding:6px;
-        ">
-      <img src="https://imgns.de/images/img_5757.png" alt="New Image" style="
-        width:100%;
-        aspect-ratio:1/1;
-        object-fit:cover;
-        border-radius:6px;
-      " />
-    </div>
-    
-    <div style="
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        border-radius:8px;
-        box-shadow:0 2px 6px rgba(0,0,0,0.15);
-        background:#fff;
-        padding:6px;
-        ">
-      <img src="https://imgns.de/images/img_2215.png" alt="New Image" style="
-        width:100%;
-        aspect-ratio:1/1;
-        object-fit:cover;
-        border-radius:6px;
-      " />
-    </div>
-    </div>
+</div>
 
 <script>
   const gallery = document.getElementById('gallery');
-  const addBtn = document.getElementById('addBtn');
-  const amountInput = document.getElementById('amount');
 
-  function addImage(path, title) {
+  function addImage(path, idx) {
     const container = document.createElement('div');
-    container.style.display = 'flex';
-    container.style.flexDirection = 'column';
-    container.style.alignItems = 'center';
-    container.style.borderRadius = '8px';
-    container.style.boxShadow = '0 2px 6px rgba(0,0,0,0.15)';
-    container.style.background = '#fff';
-    container.style.padding = '6px';
+    container.className = 'image-container';
 
     const img = document.createElement('img');
     img.src = path;
-    img.alt = title;
-    img.style.width = '100%';
-    img.style.aspectRatio = '1 / 1';
-    img.style.objectFit = 'cover';
-    img.style.borderRadius = '6px';
+    img.alt = `Image #${idx}`;
 
     const caption = document.createElement('div');
-    caption.textContent = title;
-    caption.style.marginTop = '6px';
-    caption.style.fontSize = '14px';
-    caption.style.color = '#333';
-    caption.style.textAlign = 'center';
-    caption.style.userSelect = 'none';
+    caption.className = 'caption';
+    caption.textContent = `Image #${idx}`;
 
     container.appendChild(img);
     container.appendChild(caption);
@@ -158,30 +79,9 @@ More actions
     gallery.appendChild(container);
   }
 
-  function getRandomId() {
-    return Math.floor(Math.random() * 1085);
-  }
-
-  function addImages(count) {
-    for (let i = 0; i < count; i++) {
-      const id = getRandomId();
-      const path = `https://picsum.photos/id/${id}/512/512?random=${Math.random()}`;
-      const title = `Image #${id}`;
-      addImage(path, title);
-    }
-  }
-
-  addBtn.addEventListener('click', () => {
-    let count = parseInt(amountInput.value, 10);
-    if (isNaN(count) || count < 1) {
-      alert('Please enter a positive number');
-      return;
-    }
-    if (count > 100) count = 100;
-    addImages(count);
-  });
-
+  // Example usage:
+  // addImage('https://picsum.photos/id/1011/512/512', 1011);
 </script>
 
 </body>
-</html> 
+</html>
