@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gallery with Titles</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 16px;
+    background: #f0f0f0;
+  }
+  #controls {
+    margin-bottom: 16px;
+  }
+  #amount {
+    width: 60px;
+    padding: 6px;
+    font-size: 16px;
+  }
+  button {
+    padding: 7px 14px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  #gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+    gap: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div id="gallery"></div>
+
+<script>
+  const gallery = document.getElementById('gallery');
+  const addBtn = document.getElementById('addBtn');
+  const amountInput = document.getElementById('amount');
+
+  function addImage(path, title) {
+    const container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.alignItems = 'center';
+    container.style.borderRadius = '8px';
+    container.style.boxShadow = '0 2px 6px rgba(0,0,0,0.15)';
+    container.style.background = '#fff';
+    container.style.padding = '6px';
+
+    const img = document.createElement('img');
+    img.src = path;
+    img.alt = title;
+    img.style.width = '100%';
+    img.style.aspectRatio = '1 / 1';
+    img.style.objectFit = 'cover';
+    img.style.borderRadius = '6px';
+
+    const caption = document.createElement('div');
+    caption.textContent = title;
+    caption.style.marginTop = '6px';
+    caption.style.fontSize = '14px';
+    caption.style.color = '#333';
+    caption.style.textAlign = 'center';
+    caption.style.userSelect = 'none';
+
+    container.appendChild(img);
+    container.appendChild(caption);
+
+    gallery.appendChild(container);
+  }
+
+  function getRandomId() {
+    return Math.floor(Math.random() * 1085);
+  }
+
+  function addImages(count) {
+    for (let i = 0; i < count; i++) {
+      const id = getRandomId();
+      const path = `https://picsum.photos/id/${id}/512/512?random=${Math.random()}`;
+      const title = `Image #${id}`;
+      addImage(path, title);
+    }
+  }
+
+  addBtn.addEventListener('click', () => {
+    let count = parseInt(amountInput.value, 10);
+    if (isNaN(count) || count < 1) {
+      alert('Please enter a positive number');
+      return;
+    }
+    if (count > 100) count = 100;
+    addImages(count);
+  });
+
+</script>
+
+</body>
+</html> 
