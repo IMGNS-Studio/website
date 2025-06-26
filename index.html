@@ -1,21 +1,150 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>IMGNS.de</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css">
-  <link rel="icon" href="./favicon.png" type="image/png">
+  <title>Korin - I Make Games N' Stuff</title>
+
+  <style>
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+
+      background-image: url("./res/bg.png");
+      background-size: 64px;
+      background-repeat: repeat;
+      animation: bg-scroll 10s linear infinite;
+    }
+
+    @keyframes bg-scroll {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: 0 640px;
+      }
+    }
+
+    main {
+      font-family: monospace;
+      font-size: 16px;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 2rem;
+      border-radius: 0px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      min-height: 75vh;
+      width: 75%;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: #942ea8;
+      font-weight: bold;
+      transition: color .5s;
+    }
+
+    a:hover{
+      color: #c55cda;
+      text-decoration: underline;
+    }
+
+    section {
+      display: none;
+    }
+
+    section:target {
+      display: block;
+    }
+
+    body:not(:has(section:target)) #default > section {
+      display: block;
+    }
+
+    section:target ~ #default > section,
+    body:has(section:target) #default > section{
+      display: none;
+    }
+  </style>
+
 </head>
+
 <body>
-  
-  <div class="center-panel">
-    <h1>Hello.</h1>
-    <h2>We're still working on the website</h2>
-    <p>Check back soon!</p>
-    <br><br><br>
-    <small><p>2025 (c) IMGNS.de<br><a href="mailto:admin@imgns.de">admin@imgns.de</a></p></small>
-  </div>
-  
+
+  <main>
+    <h1 style="text-align: center;">I Make Games N' Stuff</h1>
+    <hr width="65%">
+
+    <nav>
+      <a href="#about">About</a>
+      <a href="#music">Music</a>
+      <a href="#games">Games</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div id="default">
+
+    </div>
+      <section id="about">
+        <h2>About</h2>
+        <p>As a 8 year old child, I often tinkered around with computers, programs, system files etc.<br>
+          Then i found a book about writing code in Python for beginners; Since then i learned the following languages:
+          <ul>
+            <li>Python 3.x</li>
+            <li>Lua 5.x</li>
+            <li>GDScript</li>
+            <li>C#</li>
+            <li>Java</li>
+          </ul>
+        </p>
+    </section>
+
+
+    <section id="music">
+      <h2>Music</h2>
+      <p>Currently composing for my games. Listen on <a href="https://korin-dev.bandcamp.com/" target="_blank">Bandcamp</a></p>
+    </section>
+
+<section id="games">
+  <h2>Games</h2>
+  <p>Play my games on <a href="https://imgns.itch.io" target="_blank">Itch.IO</a>.</p>
+  <hr width="65%">
+  <strong>Chronicles of Eldorin</strong> - 3D Fantasy RPG inspired by:
+  <ul>
+    <li><b>TLoZ: OoT/MM</b></li>
+    <li><b>Elder Scrolls</b></li>
+    <li><b>Tolkien: Hobbit / Lord of the Rings</b></li>
+    <li><b>C.S. Lewis: Chronicles of Narnia</b></li>
+  </ul>
+</section>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        <strong>Email:</strong> <a href="mailto:admin@imgns.de">admin@imgns.de</a><br>
+        <strong>Discord:</strong> korin.dev
+      </p>
+    </section>
+  </main>
+  <script>
+    if (!window.location.hash) {
+      document.getElementById('about').style.display = 'block';
+    }else if (window.location.hash != "#about"){
+      document.getElementById('about').style.display = 'none';
+    }
+  </script>
 </body>
+
 </html>
