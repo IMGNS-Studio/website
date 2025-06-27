@@ -138,13 +138,25 @@
       </p>
     </section>
   </main>
-  <script>
-    if (!window.location.hash) {
-      document.getElementById('about').style.display = 'block';
-    }else if (window.location.hash != "#about"){
-      document.getElementById('about').style.display = 'none';
+<script>
+  let lastHash = window.location.hash;
+
+  setInterval(() => {
+    const currentHash = window.location.hash;
+    const aboutSection = document.getElementById('about');
+
+    if (currentHash !== lastHash) {
+      lastHash = currentHash;
     }
-  </script>
+
+    if (!currentHash || currentHash === "#about") {
+      aboutSection.style.display = 'block';
+    } else {
+      aboutSection.style.display = 'none';
+    }
+  }, 100);
+</script>
+
 </body>
 
 </html>
