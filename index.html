@@ -1,61 +1,37 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Korin - I Make Games N' Stuff</title>
-
   <style>
-
     body {
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-
-      background-image: url("./res/bg.png");
-      background-size: 64px;
-      background-repeat: repeat;
-      animation: bg-scroll 10s linear infinite;
-    }
-
-    @keyframes bg-scroll {
-      from {
-        background-position: 0 0;
-      }
-      to {
-        background-position: 0 640px;
-      }
+      font-family: monospace;
+      background: #ccc url("https://imgns.de/res/bg.png") repeat;
     }
 
     main {
-      font-family: monospace;
       font-size: 16px;
-      background-color: rgba(255, 255, 255, 0.85);
+      background-color: #fff;
       padding: 2rem;
-      border-radius: 0px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       max-width: 600px;
-      min-height: 75vh;
-      width: 75%;
+      margin: 2rem auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
+      text-align: center;
       margin-bottom: 1rem;
     }
 
-    a {
+    nav a {
       text-decoration: none;
       color: #942ea8;
       font-weight: bold;
-      transition: color .5s;
+      margin: 0 0.5rem;
     }
 
-    a:hover{
+    nav a:hover {
       color: #c55cda;
       text-decoration: underline;
     }
@@ -64,24 +40,13 @@
       display: none;
     }
 
-    section:target {
+    section.active {
       display: block;
-    }
-
-    body:not(:has(section:target)) #default > section {
-      display: block;
-    }
-
-    section:target ~ #default > section,
-    body:has(section:target) #default > section{
-      display: none;
     }
   </style>
-
 </head>
 
 <body>
-
   <main>
     <h1 style="text-align: center;">I Make Games N' Stuff</h1>
     <hr width="65%">
@@ -93,70 +58,63 @@
       <a href="#contact">Contact</a>
     </nav>
 
-    <div id="default">
-
-    </div>
-      <section id="about">
-        <h2>About</h2>
-        <p>When i was 8 years old, I often tinkered around with computers, programs, system files etc.<br>
-          Then i found a book about writing code in Python for beginners; Since then i learned the following languages:
-          <ul>
-            <li>Python 3.x</li>
-            <li>Lua 5.x</li>
-            <li>GDScript</li>
-            <li>C#</li>
-            <li>Java</li>
-          </ul>
-        </p>
+    <section id="about" class="active">
+      <h2>About</h2>
+      <p>When I was 8 years old, I often tinkered around with computers, programs, system files etc.<br>
+      Then I found a book about writing code in Python for beginners; Since then I learned the following languages:</p>
+      <ul>
+        <li>Python 3.x</li>
+        <li>Lua 5.x</li>
+        <li>GDScript</li>
+        <li>C#</li>
+        <li>Java</li>
+      </ul>
     </section>
-
 
     <section id="music">
       <h2>Music</h2>
-      <p>Currently composing for my games. Listen on <a href="https://korin-dev.bandcamp.com/" target="_blank">Bandcamp</a></p>
+      <p>Currently composing for my games. Listen on <a href="https://korin-dev.bandcamp.com/" target="_blank">Bandcamp</a>.</p>
     </section>
 
-<section id="games">
-  <h2>Games</h2>
-  <p>Play my games on <a href="https://imgns.itch.io" target="_blank">Itch.IO</a>.</p>
-  <hr width="65%">
-  <strong>Chronicles of Eldorin</strong> - 3D Fantasy RPG inspired by:
-  <ul>
-    <li><b>TLoZ: OoT/MM</b></li>
-    <li><b>Elder Scrolls</b></li>
-    <li><b>Tolkien: Hobbit / Lord of the Rings</b></li>
-    <li><b>C.S. Lewis: Chronicles of Narnia</b></li>
-  </ul>
-</section>
+    <section id="games">
+      <h2>Games</h2>
+      <p>Play my games on <a href="https://imgns.itch.io" target="_blank">Itch.IO</a>.</p>
+      <hr width="65%">
+      <strong>Chronicles of Eldorin</strong> - 3D Fantasy RPG inspired by:
+      <ul>
+        <li><b>TLoZ: OoT/MM</b></li>
+        <li><b>Elder Scrolls</b></li>
+        <li><b>Tolkien: Hobbit / Lord of the Rings</b></li>
+        <li><b>C.S. Lewis: Chronicles of Narnia</b></li>
+      </ul>
     </section>
 
     <section id="contact">
       <h2>Contact</h2>
       <p>
-        <strong>Email:</strong> <a href="mailto:admin@imgns.de">admin@imgns.de</a><br>
+        <strong>Email:</strong> <a href="mailto:admin@imgns.de">admin@imgns.de<br>
         <strong>Discord:</strong> korin.dev
       </p>
     </section>
   </main>
-<script>
-  let lastHash = window.location.hash;
 
-  setInterval(() => {
-    const currentHash = window.location.hash;
-    const aboutSection = document.getElementById('about');
+  <script>
+    // Basic JS routing fallback
+    function showSectionFromHash() {
+      const hash = window.location.hash || "#about";
+      const sections = document.querySelectorAll("section");
 
-    if (currentHash !== lastHash) {
-      lastHash = currentHash;
+      sections.forEach(section => {
+        if ("#" + section.id === hash) {
+          section.classList.add("active");
+        } else {
+          section.classList.remove("active");
+        }
+      });
     }
 
-    if (!currentHash || currentHash === "#about") {
-      aboutSection.style.display = 'block';
-    } else {
-      aboutSection.style.display = 'none';
-    }
-  }, 100);
-</script>
-
+    window.addEventListener("hashchange", showSectionFromHash);
+    window.addEventListener("DOMContentLoaded", showSectionFromHash);
+  </script>
 </body>
-
 </html>
